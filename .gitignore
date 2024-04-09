@@ -1,6 +1,15 @@
 # my stuff
 docs/_build/**
 .vscode/**
+cybergis_compute_user.json
+core.*
+*.shx
+*.shp
+*.dbf
+*.cpg
+*.html
+*.prj
+*.geojson
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
