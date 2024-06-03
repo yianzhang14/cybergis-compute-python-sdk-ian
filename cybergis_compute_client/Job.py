@@ -141,6 +141,7 @@ class Job:
             return self.status(raw=True)['events']
 
         isEnd = False
+        jobFailure = False
         while (not isEnd):
             self._clear()
             status = self.status(raw=True)
@@ -157,6 +158,8 @@ class Job:
                 ])
                 isEnd = isEnd or o['type'] == 'JOB_ENDED' or o[
                     'type'] == 'JOB_FAILED'
+                if isEnd and o['type'] == 'JOB_FAILED':
+                    jobFailure = True
 
             print('📮 Job ID: ' + self.id)
             if 'slurmId' in status:
@@ -179,6 +182,7 @@ class Job:
 
             if not isEnd:
                 time.sleep(refreshRateInSeconds)
+        return jobFailure
 
     def logs(self, raw=False, liveOutput=True, refreshRateInSeconds=15):
         """

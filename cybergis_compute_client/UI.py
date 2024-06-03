@@ -558,7 +558,7 @@ class UI:
         if not self.submitted:
             return
         with self.resultEvents['output']:
-            self.compute.job.events()
+            self.jobFailure = self.compute.job.events()  # run with raw=False by default
         return
 
     def renderResultLogs(self):
@@ -571,6 +571,19 @@ class UI:
         if not self.submitted:
             return
         with self.resultLogs['output']:
+            if not self.jobFailure:
+                self.compute.job.logs()
+                self.tab.set_title(2, '✅ Download Job Result')
+                display(Markdown('***'))
+                display(Markdown('## ✅ your job completed'))
+                self.jobFinished = True
+                self.rerender(['download'])
+            else:
+                display(Markdown('***'))
+                display(Markdown('## ❌ job failed'))
+                print("Failed to run job, check job event messages to troubleshoot")
+                self.jobFinished = False
+                return
             self.compute.job.logs()
             self.tab.set_title(2, '✅ Download Job Result')
             display(Markdown('***'))
@@ -960,6 +973,7 @@ class UI:
         self.jobs = self.compute.list_git(raw=True)
         self.hpcs = self.compute.list_hpc(raw=True)
         # state
+        self.jobFailure = False
         self.submitted = False
         self.jobFinished = False
         self.downloading = False
