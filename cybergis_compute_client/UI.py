@@ -128,7 +128,7 @@ class UI:
         user_folders = widgets.Output()
         with user_folders:
             display(self.folders['output'])
-            
+
         # 6. access authentication
         access_auth = widgets.Output()
         with access_auth:
