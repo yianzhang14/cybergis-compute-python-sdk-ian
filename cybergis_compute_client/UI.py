@@ -128,6 +128,12 @@ class UI:
         user_folders = widgets.Output()
         with user_folders:
             display(self.folders['output'])
+            
+        # 6. access authentication
+        access_auth = widgets.Output()
+        with access_auth:
+            display("Authenticate with ACCESS with the following link: ")
+            display(f"[Click here](https://cilogon.org/authorize?response_type=code&client_id=cilogon:/client_id/167328d1519f05439a31b20acd9bab28&redirect_uri={self.compute.url}/v2/auth/cilogon/callback&scope=openid+profile+email+org.cilogon.userinfo&idphint=https://access-ci.org/idp&state={self.compute.jupyterhubApiToken})")
 
         # assemble into tabs
         self.tab = widgets.Tab(children=[
