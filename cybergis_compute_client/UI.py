@@ -133,7 +133,7 @@ class UI:
         access_auth = widgets.Output()
         with access_auth:
             display("Authenticate with ACCESS with the following link: ")
-            display(f"[Click here](https://cilogon.org/authorize?response_type=code&client_id=cilogon:/client_id/167328d1519f05439a31b20acd9bab28&redirect_uri={self.compute.url}/v2/auth/cilogon/callback&scope=openid+profile+email+org.cilogon.userinfo&idphint=https://access-ci.org/idp&state={self.compute.jupyterhubApiToken})")
+            display(Markdown(f"[Click here](https://cilogon.org/authorize?response_type=code&client_id=cilogon:/client_id/167328d1519f05439a31b20acd9bab28&redirect_uri={self.compute.url}/v2/auth/cilogon/callback&scope=openid+profile+email+org.cilogon.userinfo&idphint=https://access-ci.org/idp&state={self.compute.jupyterhubApiToken})"))
 
         # assemble into tabs
         self.tab = widgets.Tab(children=[
@@ -141,13 +141,15 @@ class UI:
             job_status,
             download,
             job_refresh,
-            user_folders
+            user_folders,
+            access_auth
         ])
         self.tab.set_title(0, 'Job Configuration')
         self.tab.set_title(1, 'Your Job Status')
         self.tab.set_title(2, 'Download Job Result')
         self.tab.set_title(3, 'Your Jobs')
         self.tab.set_title(4, 'Past Results')
+        self.tab.set_title(5, "ACCESS login")
         display(self.tab)
 
     def renderComponents(self):
